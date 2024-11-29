@@ -1,0 +1,29 @@
+# habit_tracker.py
+
+import json
+
+def load_habits():
+    try:
+        with open("habits.json", "r") as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return {}
+
+def save_habits(habits):
+    with open("habits.json", "w") as file:
+        json.dump(habits, file)
+
+def add_habit(name):
+    habits = load_habits()
+    habits[name] = {"streak": 0}
+    save_habits(habits)
+
+def mark_habit_done(name):
+    habits = load_habits()
+    if name in habits:
+        habits[name]["streak"] += 1
+        save_habits(habits)
+
+# Sample usage
+add_habit("Exercise")
+mark_habit_done("Exercise")
